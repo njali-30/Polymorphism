@@ -1,127 +1,121 @@
-  #include<iostream>
-  using namespace std;
-  
-  class person{
-  public:
-      int id, salary;
-      string name, address;
-      virtual void accept() = 0;
-      virtual void dispaly() = 0;
-  };
- 
- class doctor : public person{
-    void accept();
-    void display(); 
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Person {
+protected:
+    int id, sal;
+    string name, add;
+public:
+    virtual void accept() = 0;  
+    virtual void display() = 0;
 };
 
-class nurse : public person{
-    void accept();
-    void display(); 
+class Doctor : public Person {
+public:
+    void accept() {
+        cout << "\nEnter the ID, Name and Address: ";
+        cin >> id >> name >> add;
+    }
+    
+    void display() {
+        cout << "Doctor ID: " << id << ", Name: " << name << ", Address: " << add << endl;
+    }
 };
 
-class staff : public person{
-    void accept();
-    void display(); 
+class Nurse : public Person {
+public:
+    void accept() {
+        cout << "\nEnter the ID, Name, Address and Salary: ";
+        cin >> id >> name >> add >> sal;
+    }
+    
+    void display() {
+        cout << "Nurse ID: " << id << ", Name: " << name << ", Address: " << add << ", Salary: " << sal << endl;
+    }
 };
 
-void doctor :: accept(){
-    cout<<"Enter id, name, salary, address"<<endl;
-    cin>>id>>name>>salary>>address;
-}
+class Astaff : public Person {
+public:
+    void accept() {
+        cout << "\nEnter the ID, Name, Address and Salary: ";
+        cin >> id >> name >> add >> sal;
+    }
+    
+    void display() {
+        cout << "Staff ID: " << id << ", Name: " << name << ", Address: " << add << ", Salary: " << sal << endl;
+    }
+};
 
-void doctor :: display(){
-    cout<<"Doctor details :"<<endl;
-    cout<<id<<"\t"<<name<<"\t"<<salary<<"\t"<<address;
-}
+int main() {
+    Doctor doctors[10];
+    Nurse nurses[10];
+    Astaff staff[10];
+    int doctorCount = 0, nurseCount = 0, staffCount = 0;
+    int choice;
 
-void nurse:: accept(){
-    cout<<"Enter id, name, salary, address"<<endl;
-    cin>>id>>name>>salary>>address;
-}
+    while (true) {
+        cout << "\nMenu:\n";
+        cout << "1. Accept details of Doctor\n";
+        cout << "2. Display details of Doctor\n";
+        cout << "3. Accept details of Nurse\n";
+        cout << "4. Display details of Nurse\n";
+        cout << "5. Accept details of Staff\n";
+        cout << "6. Display details of Staff\n";
+        cout << "7. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
 
-void nurse :: display(){
-    cout<<"Doctor details :"<<endl;
-    cout<<id<<"\t"<<name<<"\t"<<salary<<"\t"<<address;
-}
-
-void staff :: accept(){
-    cout<<"Enter id, name, salary, address"<<endl;
-    cin>>id>>name>>salary>>address;
-}
-
-void staff :: display(){
-    cout<<"Doctor details :"<<endl;
-    cout<<id<<"\t"<<name<<"\t"<<salary<<"\t"<<address;
-}
-
-int main(){
-    doctor d[10];
-    nurse n[10];
-    staff s[10];
-    int n, ch;
-    int i = 0;
-    do{
-        cout<<"1. Accept doctor details.\n2. Display doctor details.\n3. Accept nurse details.\n4. Display nurse details.\n5. Accept staff details.\n6. Display staff details.\n7. Exit( enter 0)"<<endl;
-        cout<<"\nEnter your choice : ";
-        cin>>ch;
-        switch(ch){
-            case 1 :
-            d[i].accept();
-            i++;
-            break;
-            
-            case 2 :
-            d[i].dispaly();
-            i++;
-            break;
-            
-            case 3 :
-            n[i].accept();
-            i++;
-            break;
-            
-            case 4 :
-            n[i].display();
-             i++;
-            break;
-            
-            case 5 :
-            s[i].accept();
-             i++;
-            break;
-            
-            case 6 :
-            s[i].display();
-             i++;
-            break;
-            
-            case 7 :
-            cout<<"Exiting..."<<endl;
-            break;
-            
-            default :
-            cout<<"Invalid input."<<endl;
-            break;
-            
+        switch (choice) {
+            case 1:
+                if (doctorCount < 10) {
+                    doctors[doctorCount].accept();
+                    doctorCount++;
+                } else {
+                    cout << "Doctor list is full.\n";
+                }
+                break;
+            case 2:
+                for (int i = 0; i < doctorCount; ++i) {
+                    doctors[i].display();
+                }
+                break;
+            case 3: {
+                int numNurses;
+                cout << "How many nurses do you want to enter? ";
+                cin >> numNurses;
+                for (int i = 0; i < numNurses && nurseCount < 10; ++i) {
+                    nurses[nurseCount].accept();
+                    nurseCount++;
+                }
+                break;
+            }
+            case 4:
+                for (int i = 0; i < nurseCount; ++i) {
+                    nurses[i].display();
+                }
+                break;
+            case 5: {
+                int numStaff;
+                cout << "How many staff members do you want to enter? ";
+                cin >> numStaff;
+                for (int i = 0; i < numStaff && staffCount < 10; ++i) {
+                    staff[staffCount].accept();
+                    staffCount++;
+                }
+                break;
+            }
+            case 6:
+                for (int i = 0; i < staffCount; ++i) {
+                    staff[i].display();
+                }
+                break;
+            case 7:
+                return 0;  
+            default:
+                cout << "Invalid choice! Please try again.\n";
         }
-    }while(ch!=0);
-return 0;
+    }
+
+    return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
